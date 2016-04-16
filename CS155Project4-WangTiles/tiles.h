@@ -44,9 +44,10 @@ class Tiles
 
     private:
         friend class Tile;
-        vector<Tile> tiles_;
-        vector<Image*> himage_;
-        vector<Image*> vimage_;
+        vector<Tile> tiles_;     // up_ = 1 ==> corresponds to himage_.get(1)
+                                 // left = 1 ==> corresponds to vimage_.get(1)
+        vector<Image*> himage_;  // each image in himage_ corresponds to a horizontal color
+        vector<Image*> vimage_;  // each image in vimage_ corresponds to a vertical color
         void genTiles(int hc, int vc);   // generate tile MODELS, bet on probability
 
 
