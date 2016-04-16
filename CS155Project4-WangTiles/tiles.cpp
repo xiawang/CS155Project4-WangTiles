@@ -98,7 +98,7 @@ Image* Tiles::genDummyTile(int n, int e, int s, int w){
     vector<Pixel> vtiles;
     vector<Pixel> htiles;
     
-    Image* dumb = new Image(50,50);
+    Image* dumb = new Image(tileWidth,tileHeight);
     Pixel* r = new Pixel(1,0,0);
     Pixel* g = new Pixel(0,1,0);
     Pixel* y = new Pixel(1,1,0);
@@ -111,8 +111,8 @@ Image* Tiles::genDummyTile(int n, int e, int s, int w){
     vtiles.push_back(*b);
     
     
-    for (int i = 0; i < 50; i++){
-        for (int j = 0; j < 50; j++){
+    for (int i = 0; i < tileWidth; i++){
+        for (int j = 0; j < tileHeight; j++){
             if (i > j){
                 if ((50-i) > j){
                     // North
