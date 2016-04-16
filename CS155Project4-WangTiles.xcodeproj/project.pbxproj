@@ -14,6 +14,10 @@
 		A4EAB5D41CC1DFE0009E128A /* image.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A4EAB5CD1CC1DFE0009E128A /* image.cpp */; };
 		A4EAB5D51CC1DFE0009E128A /* ip.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A4EAB5CF1CC1DFE0009E128A /* ip.cpp */; };
 		A4EAB5D61CC1DFE0009E128A /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A4EAB5D11CC1DFE0009E128A /* main.cpp */; };
+		A4EAB5E31CC1E2BF009E128A /* image_DXT.c in Sources */ = {isa = PBXBuildFile; fileRef = A4EAB5D91CC1E2BF009E128A /* image_DXT.c */; };
+		A4EAB5E41CC1E2BF009E128A /* image_helper.c in Sources */ = {isa = PBXBuildFile; fileRef = A4EAB5DB1CC1E2BF009E128A /* image_helper.c */; };
+		A4EAB5E51CC1E2BF009E128A /* SOIL.c in Sources */ = {isa = PBXBuildFile; fileRef = A4EAB5DD1CC1E2BF009E128A /* SOIL.c */; };
+		A4EAB5E61CC1E2BF009E128A /* stb_image_aug.c in Sources */ = {isa = PBXBuildFile; fileRef = A4EAB5DF1CC1E2BF009E128A /* stb_image_aug.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -42,7 +46,16 @@
 		A4EAB5D01CC1DFE0009E128A /* ip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ip.h; sourceTree = "<group>"; };
 		A4EAB5D11CC1DFE0009E128A /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		A4EAB5D21CC1DFE0009E128A /* main.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = main.h; sourceTree = "<group>"; };
-		A4EAB5D71CC1E023009E128A /* SOIL */ = {isa = PBXFileReference; lastKnownFileType = folder; path = SOIL; sourceTree = "<group>"; };
+		A4EAB5D91CC1E2BF009E128A /* image_DXT.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = image_DXT.c; path = SOIL/image_DXT.c; sourceTree = "<group>"; };
+		A4EAB5DA1CC1E2BF009E128A /* image_DXT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = image_DXT.h; path = SOIL/image_DXT.h; sourceTree = "<group>"; };
+		A4EAB5DB1CC1E2BF009E128A /* image_helper.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = image_helper.c; path = SOIL/image_helper.c; sourceTree = "<group>"; };
+		A4EAB5DC1CC1E2BF009E128A /* image_helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = image_helper.h; path = SOIL/image_helper.h; sourceTree = "<group>"; };
+		A4EAB5DD1CC1E2BF009E128A /* SOIL.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = SOIL.c; path = SOIL/SOIL.c; sourceTree = "<group>"; };
+		A4EAB5DE1CC1E2BF009E128A /* SOIL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SOIL.h; path = SOIL/SOIL.h; sourceTree = "<group>"; };
+		A4EAB5DF1CC1E2BF009E128A /* stb_image_aug.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = stb_image_aug.c; path = SOIL/stb_image_aug.c; sourceTree = "<group>"; };
+		A4EAB5E01CC1E2BF009E128A /* stb_image_aug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = stb_image_aug.h; path = SOIL/stb_image_aug.h; sourceTree = "<group>"; };
+		A4EAB5E11CC1E2BF009E128A /* stbi_DDS_aug_c.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = stbi_DDS_aug_c.h; path = SOIL/stbi_DDS_aug_c.h; sourceTree = "<group>"; };
+		A4EAB5E21CC1E2BF009E128A /* stbi_DDS_aug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = stbi_DDS_aug.h; path = SOIL/stbi_DDS_aug.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,7 +94,7 @@
 		A4EAB5BC1CC1DAD7009E128A /* CS155Project4-WangTiles */ = {
 			isa = PBXGroup;
 			children = (
-				A4EAB5D71CC1E023009E128A /* SOIL */,
+				A4EAB5D81CC1E2A6009E128A /* SOIL */,
 				A4EAB5CA1CC1DFE0009E128A /* common.h */,
 				A4EAB5CB1CC1DFE0009E128A /* control.cpp */,
 				A4EAB5CC1CC1DFE0009E128A /* control.h */,
@@ -93,6 +106,23 @@
 				A4EAB5D21CC1DFE0009E128A /* main.h */,
 			);
 			path = "CS155Project4-WangTiles";
+			sourceTree = "<group>";
+		};
+		A4EAB5D81CC1E2A6009E128A /* SOIL */ = {
+			isa = PBXGroup;
+			children = (
+				A4EAB5D91CC1E2BF009E128A /* image_DXT.c */,
+				A4EAB5DA1CC1E2BF009E128A /* image_DXT.h */,
+				A4EAB5DB1CC1E2BF009E128A /* image_helper.c */,
+				A4EAB5DC1CC1E2BF009E128A /* image_helper.h */,
+				A4EAB5DD1CC1E2BF009E128A /* SOIL.c */,
+				A4EAB5DE1CC1E2BF009E128A /* SOIL.h */,
+				A4EAB5DF1CC1E2BF009E128A /* stb_image_aug.c */,
+				A4EAB5E01CC1E2BF009E128A /* stb_image_aug.h */,
+				A4EAB5E11CC1E2BF009E128A /* stbi_DDS_aug_c.h */,
+				A4EAB5E21CC1E2BF009E128A /* stbi_DDS_aug.h */,
+			);
+			name = SOIL;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -154,7 +184,11 @@
 				A4EAB5D51CC1DFE0009E128A /* ip.cpp in Sources */,
 				A4EAB5D31CC1DFE0009E128A /* control.cpp in Sources */,
 				A4EAB5D61CC1DFE0009E128A /* main.cpp in Sources */,
+				A4EAB5E41CC1E2BF009E128A /* image_helper.c in Sources */,
+				A4EAB5E51CC1E2BF009E128A /* SOIL.c in Sources */,
 				A4EAB5D41CC1DFE0009E128A /* image.cpp in Sources */,
+				A4EAB5E31CC1E2BF009E128A /* image_DXT.c in Sources */,
+				A4EAB5E61CC1E2BF009E128A /* stb_image_aug.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
