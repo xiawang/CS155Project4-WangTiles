@@ -10,12 +10,12 @@
 /*
  * tiling a plain using Wang tiles
  */
-Image* ip_tile (Image* src, int hc, int vc)
+Image* ip_tile (Image* src, int hc, int vc, int w, int h)
 {
     cout << "hc is: "  << hc << endl;
     cout << "vc is: "  << vc << endl;
     Tiles* t  = new Tiles(src, hc, vc);
-    return t->tilePlain();
+    return t->tilePlain(w, h);
 
 }
 

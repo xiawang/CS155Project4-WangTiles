@@ -453,11 +453,17 @@ void process_func (int value)
         case M_PROCESS_TILE:
             int hc;
             int vc;
+            int w;
+            int h;
             cout << "Please specify number of horizontal colors: " << endl;
             cin >> hc;
             cout << "Please specify number of vertical colors: " << endl;
             cin >> vc;
-            resultImage = ip_tile(currentImage,hc, vc);
+            cout << "Please specify desired width: " << endl;
+            cin >> w;
+            cout << "Please specify desired height: " << endl;
+            cin >> h;
+            resultImage = ip_tile(currentImage, hc, vc, w, h);
             break;
             
         case M_PROCESS_QUANTIZE_SIMPLE:  // enum #21
