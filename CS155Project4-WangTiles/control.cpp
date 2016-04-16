@@ -44,6 +44,7 @@ enum {
     M_PROCESS_SATURATE=25,
     M_PROCESS_SEPIA = 34,
     M_PROCESS_SCALE=26,
+    M_PROCESS_TILE=42,
     
     M_PROCESS_SET_SAMPLING_BILINEAR=27,
     M_PROCESS_SET_SAMPLING_NEAREST=28,
@@ -108,6 +109,7 @@ int make_menu ()
     glutAddMenuEntry( "Saturate...",	M_PROCESS_SATURATE);
     glutAddMenuEntry( "Sepia tone", M_PROCESS_SEPIA);
     glutAddMenuEntry( "Threshold...",	M_PROCESS_THRESHOLD);
+    glutAddMenuEntry("Plain tiling...", M_PROCESS_TILE);
     glutAddSubMenu( "Warp", warp);
     
     
@@ -446,7 +448,11 @@ void process_func (int value)
         case M_PROCESS_MISC: // enum #20
             resultImage = ip_misc(currentImage);
             break;
+        
             
+        case M_PROCESS_TILE:
+            resultImage = ip_tile(currentImage);
+            break;
             
         case M_PROCESS_QUANTIZE_SIMPLE:  // enum #21
         {

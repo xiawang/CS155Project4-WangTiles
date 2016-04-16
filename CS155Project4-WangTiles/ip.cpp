@@ -6,6 +6,15 @@
 #include <vector>
 
 
+/*
+ * tiling a plain using Wang tiles
+ */
+Image* ip_tile (Image* src)
+{
+    return src;
+}
+
+
 
 /*
  * convolve with a box filter
