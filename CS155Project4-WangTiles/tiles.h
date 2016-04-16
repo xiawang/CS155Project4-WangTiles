@@ -3,6 +3,9 @@
 
 using namespace std;
 
+const int tileWidth = 50;
+const int tileHeight = 50;
+
 class Tile
 {
     public:
@@ -21,7 +24,7 @@ class Tile
         int getLeft();
         Image* getTexture();
     
-        bool validNeighbor(int type, Tile n);
+        bool validNeighbor(int up, int left);
         void genTexture();
         ~Tile ();
         
@@ -39,6 +42,8 @@ class Tile
 class Tiles
 {
     public:
+        Tiles();   // default constructor for testing, using dummy models in tiles folder
+                   // Ignores the source image, but uses specified width and height
         Tiles(Image* scr, int hc, int vc);
         Image* tilePlain(int w, int h); // generete FINAL RESULT!
 
@@ -46,9 +51,11 @@ class Tiles
         friend class Tile;
         vector<Tile> tiles_;     // up_ = 1 ==> corresponds to himage_.get(1)
                                  // left = 1 ==> corresponds to vimage_.get(1)
-        vector<Image*> himage_;  // each image in himage_ corresponds to a horizontal color
-        vector<Image*> vimage_;  // each image in vimage_ corresponds to a vertical color
-        void genTiles(int hc, int vc);   // generate tile MODELS, bet on probability
+        vector<Image*> himage_;               // each image in himage_ corresponds to a horizontal color
+        vector<Image*> vimage_;               // each image in vimage_ corresponds to a vertical color
+        void genTiles(int hc, int vc);        // generate tile MODELS, bet on probability
+        int getRandomTile(int up, int left);  // randomly select a tile with matching NW edge
+        Image* genDummyTile(int n, int e, int s, int w);
 
 
 

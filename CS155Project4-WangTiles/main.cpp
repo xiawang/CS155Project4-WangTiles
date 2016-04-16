@@ -67,7 +67,7 @@ int main (int argc, char** argv)
 char* init (int argc, char** argv)
 {
     // init random number generator
-    //srand48(time(0));
+    srand48(time(0));
     
     char* toLoad = NULL;
     

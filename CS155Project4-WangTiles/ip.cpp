@@ -14,7 +14,7 @@ Image* ip_tile (Image* src, int hc, int vc, int w, int h)
 {
     cout << "hc is: "  << hc << endl;
     cout << "vc is: "  << vc << endl;
-    Tiles* t  = new Tiles(src, hc, vc);
+    Tiles* t  = new Tiles();
     return t->tilePlain(w, h);
 
 }
