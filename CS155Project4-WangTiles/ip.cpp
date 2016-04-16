@@ -4,16 +4,18 @@
 #include <stdlib.h>
 #include <math.h>
 #include <vector>
+#include "tiles.h"
 
 
 /*
  * tiling a plain using Wang tiles
  */
-Image* ip_tile (Image* src)
+Image* ip_tile (Image* src, int hc, int vc)
 {
-    
-    
-    return src;
+    cout << "got "  << hc << endl;
+    Tiles* t  = new Tiles(src, hc, vc);
+    return t->tilePlain();
+
 }
 
 

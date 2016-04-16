@@ -1,4 +1,7 @@
 #include "image.h"
+#include <vector>
+
+using namespace std;
 
 class Tile
 {
@@ -14,6 +17,7 @@ class Tile
         int getDown();
         int getRight();
         int getLeft();
+        bool validNeighbor(int type, Tile n);
         Image* getTexture();
         ~Tile ();
         
@@ -25,4 +29,19 @@ class Tile
         int left_;
         int right_;
         Image* tex_;
+};
+
+
+class Tiles
+{
+    public:
+        Tiles(Image* scr, int hc, int vc);
+        Image* tilePlain();
+
+    private:
+        vector<Tile> tiles_;
+        void genTiles();
+
+
+
 };
