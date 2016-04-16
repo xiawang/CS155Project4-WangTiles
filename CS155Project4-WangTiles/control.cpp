@@ -448,7 +448,7 @@ void process_func (int value)
         case M_PROCESS_MISC: // enum #20
             resultImage = ip_misc(currentImage);
             break;
-        
+            
             
         case M_PROCESS_TILE:
             int hc;
@@ -693,13 +693,13 @@ void image_load (const char* filename)
     originalImage->readBMP(filename);
     
     if (originalImage->good())
-    {  
+    {
         currentImage = new Image(*originalImage);
         reshape(currentImage->getWidth(), currentImage->getHeight());
     }
     else
     {
-        delete originalImage;  
+        delete originalImage;
         originalImage = NULL;
         cerr << "Couldn't load image " << filename << "!" << endl;
         return;
@@ -710,7 +710,7 @@ void image_load (const char* filename)
     
     if (!quietMode)
         cerr << "done!" << endl;
-}  
+}
 
 
 void image_save (const char* filename)
@@ -722,7 +722,7 @@ void image_save (const char* filename)
             //delete originalImage;
             //originalImage = new Image(*currentImage);
         }
-    }  
+    }
     else if (originalImage)
     {
         originalImage->writeBMP(filename);
@@ -739,7 +739,7 @@ void image_save (const char* filename)
 
 
 void image_print_info ()
-{  
+{
     if (currentImage) {
         cerr << "width:    " << currentImage->getWidth() << endl
         << "height:   " << currentImage->getHeight() << endl
@@ -773,7 +773,7 @@ void image_revert ()
     
     if (!quietMode)
         cerr << "done!" << endl;
-}  
+}
 
 int getFilterSize()
 {

@@ -7,7 +7,8 @@ class Tile
 {
     public:
         Tile ();
-        
+        Tile (int up, int left);
+    
         void setUp(int u);
         void setDown(int d);
         void setLeft(int l);
@@ -19,6 +20,7 @@ class Tile
         int getLeft();
         bool validNeighbor(int type, Tile n);
         Image* getTexture();
+        void genTexture();
         ~Tile ();
         
         
@@ -39,8 +41,11 @@ class Tiles
         Image* tilePlain();
 
     private:
+        friend class Tile;
         vector<Tile> tiles_;
-        void genTiles();
+        vector<Image*> himage_;
+        vector<Image*> vimage_;
+        void genTiles();   // generate tile models, bet on probability
 
 
 
