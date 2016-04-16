@@ -7,10 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		A4EAB5BE1CC1DAD7009E128A /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A4EAB5BD1CC1DAD7009E128A /* main.cpp */; };
 		A4EAB5C51CC1DB09009E128A /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4EAB5C41CC1DB09009E128A /* Cocoa.framework */; };
 		A4EAB5C71CC1DB0F009E128A /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4EAB5C61CC1DB0F009E128A /* OpenGL.framework */; };
 		A4EAB5C91CC1DB15009E128A /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A4EAB5C81CC1DB15009E128A /* GLUT.framework */; };
+		A4EAB5D31CC1DFE0009E128A /* control.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A4EAB5CB1CC1DFE0009E128A /* control.cpp */; };
+		A4EAB5D41CC1DFE0009E128A /* image.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A4EAB5CD1CC1DFE0009E128A /* image.cpp */; };
+		A4EAB5D51CC1DFE0009E128A /* ip.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A4EAB5CF1CC1DFE0009E128A /* ip.cpp */; };
+		A4EAB5D61CC1DFE0009E128A /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A4EAB5D11CC1DFE0009E128A /* main.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -27,10 +30,19 @@
 
 /* Begin PBXFileReference section */
 		A4EAB5BA1CC1DAD7009E128A /* CS155Project4-WangTiles */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "CS155Project4-WangTiles"; sourceTree = BUILT_PRODUCTS_DIR; };
-		A4EAB5BD1CC1DAD7009E128A /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		A4EAB5C41CC1DB09009E128A /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		A4EAB5C61CC1DB0F009E128A /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		A4EAB5C81CC1DB15009E128A /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = System/Library/Frameworks/GLUT.framework; sourceTree = SDKROOT; };
+		A4EAB5CA1CC1DFE0009E128A /* common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = common.h; sourceTree = "<group>"; };
+		A4EAB5CB1CC1DFE0009E128A /* control.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = control.cpp; sourceTree = "<group>"; };
+		A4EAB5CC1CC1DFE0009E128A /* control.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = control.h; sourceTree = "<group>"; };
+		A4EAB5CD1CC1DFE0009E128A /* image.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = image.cpp; sourceTree = "<group>"; };
+		A4EAB5CE1CC1DFE0009E128A /* image.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = image.h; sourceTree = "<group>"; };
+		A4EAB5CF1CC1DFE0009E128A /* ip.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ip.cpp; sourceTree = "<group>"; };
+		A4EAB5D01CC1DFE0009E128A /* ip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ip.h; sourceTree = "<group>"; };
+		A4EAB5D11CC1DFE0009E128A /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		A4EAB5D21CC1DFE0009E128A /* main.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = main.h; sourceTree = "<group>"; };
+		A4EAB5D71CC1E023009E128A /* SOIL */ = {isa = PBXFileReference; lastKnownFileType = folder; path = SOIL; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,7 +81,16 @@
 		A4EAB5BC1CC1DAD7009E128A /* CS155Project4-WangTiles */ = {
 			isa = PBXGroup;
 			children = (
-				A4EAB5BD1CC1DAD7009E128A /* main.cpp */,
+				A4EAB5D71CC1E023009E128A /* SOIL */,
+				A4EAB5CA1CC1DFE0009E128A /* common.h */,
+				A4EAB5CB1CC1DFE0009E128A /* control.cpp */,
+				A4EAB5CC1CC1DFE0009E128A /* control.h */,
+				A4EAB5CD1CC1DFE0009E128A /* image.cpp */,
+				A4EAB5CE1CC1DFE0009E128A /* image.h */,
+				A4EAB5CF1CC1DFE0009E128A /* ip.cpp */,
+				A4EAB5D01CC1DFE0009E128A /* ip.h */,
+				A4EAB5D11CC1DFE0009E128A /* main.cpp */,
+				A4EAB5D21CC1DFE0009E128A /* main.h */,
 			);
 			path = "CS155Project4-WangTiles";
 			sourceTree = "<group>";
@@ -130,7 +151,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A4EAB5BE1CC1DAD7009E128A /* main.cpp in Sources */,
+				A4EAB5D51CC1DFE0009E128A /* ip.cpp in Sources */,
+				A4EAB5D31CC1DFE0009E128A /* control.cpp in Sources */,
+				A4EAB5D61CC1DFE0009E128A /* main.cpp in Sources */,
+				A4EAB5D41CC1DFE0009E128A /* image.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

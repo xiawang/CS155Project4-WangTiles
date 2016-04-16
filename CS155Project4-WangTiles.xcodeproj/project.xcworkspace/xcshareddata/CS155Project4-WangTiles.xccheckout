@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>5CB670C3-71D3-46B9-8644-8A51DD9662F5</string>
+	<key>IDESourceControlProjectName</key>
+	<string>project</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>CADC7988571EC3ED315C55EF6DA2C14B0560E1FE</key>
+		<string>https://github.com/xiawang/CS155Project4-WangTiles.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>CS155Project4-WangTiles.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>CADC7988571EC3ED315C55EF6DA2C14B0560E1FE</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/xiawang/CS155Project4-WangTiles.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>CADC7988571EC3ED315C55EF6DA2C14B0560E1FE</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>CADC7988571EC3ED315C55EF6DA2C14B0560E1FE</string>
+			<key>IDESourceControlWCCName</key>
+			<string>CS155Project4-WangTiles</string>
+		</dict>
+	</array>
+</dict>
+</plist>
