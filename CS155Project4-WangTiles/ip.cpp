@@ -10,7 +10,7 @@
 /*
  * tiling a plain using Wang tiles
  */
-Image* ip_tile (Image* src, int hc, int vc, int w, int h)
+Image* ip_tile (Image* src, int hc, int vc, int w, int h, bool source)
 {
     cout << "hc is: "  << hc << endl;
     cout << "vc is: "  << vc << endl;

@@ -2,6 +2,7 @@
 #include "ip.h"
 #include "main.h"
 #include <stdlib.h>
+#include <string>
 
 
 /*
@@ -451,10 +452,13 @@ void process_func (int value)
             
             
         case M_PROCESS_TILE:
+        {
             int hc;
             int vc;
             int w;
             int h;
+            std::string source;
+            bool s;
             cout << "Please specify number of horizontal colors: " << endl;
             cin >> hc;
             cout << "Please specify number of vertical colors: " << endl;
@@ -463,9 +467,16 @@ void process_func (int value)
             cin >> w;
             cout << "Please specify desired height: " << endl;
             cin >> h;
-            resultImage = ip_tile(currentImage, hc, vc, w, h);
+            cout << "Would you like to use the image as the texture source? Type 'y' to use input image, or 'n' to use colored quads: " << endl;
+            cin >> source;
+            if (source == "y") {
+                s = true;
+            } else {
+                s = false;
+            }
+            resultImage = ip_tile(currentImage, hc, vc, w, h, s);
             break;
-            
+        }
         case M_PROCESS_QUANTIZE_SIMPLE:  // enum #21
         {
             
