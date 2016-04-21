@@ -3,9 +3,6 @@
 
 using namespace std;
 
-const int tileWidth = 50;
-const int tileHeight = 50;
-
 class Tile
 {
     public:
