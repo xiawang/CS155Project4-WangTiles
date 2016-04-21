@@ -257,6 +257,36 @@ Tiles::Tiles(Image* scr, int hc, int vc)
  */
 void Tiles::genTiles(int hc, int vc){
     
+    for (int i = 0; i < hc; i ++){
+        for (int j = 0; j < vc; j++) {
+
+            int h1 = rand() % hc;
+            int h2 = rand() % hc;
+            int v1 = rand() % vc;
+            int v2 = rand() % vc;
+
+            while ((h1 == h2) && (v1 == v2)){
+                h1 = rand() % hc;
+                h2 = rand() % hc;
+                v1 = rand() % vc;
+                v2 = rand() % vc;
+            }
+
+            Tile* t1 = new Tile(i, j);
+            Tile* t2 = new Tile(i, j);
+
+            t1->setRight(v1);
+            t1->setDown(h1);
+
+            t2->setRight(v2);
+            t2->setDown(h2);
+            
+            tiles_.push_back(*t1);
+            tiles_.push_back(*t2);
+            
+        }
+    }
+    
 }
 
 
