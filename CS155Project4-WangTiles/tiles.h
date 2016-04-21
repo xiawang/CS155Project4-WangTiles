@@ -42,21 +42,25 @@ class Tile
 class Tiles
 {
     public:
-        Tiles(int tw, int th);   // default constructor for testing, using dummy models in tiles folder
+        Tiles(int hc, int vc, int tw, int th);   // default constructor for testing, using dummy models in tiles folder
                    // Ignores the source image, but uses specified width and height
-        Tiles(Image* scr, int hc, int vc);
-        Image* tilePlain(int w, int h, int tw, int th); // generete FINAL RESULT!
+        Tiles(Image* scr, int hc, int vc, int tw, int th);
+        Image* tilePlain(int w, int h); // generete FINAL RESULT!
 
     private:
         friend class Tile;
+        int hc_;
+        int vc_;
+        int tw_;
+        int th_;
         vector<Tile> tiles_;     // up_ = 1 ==> corresponds to himage_.get(1)
                                  // left = 1 ==> corresponds to vimage_.get(1)
         vector<Pixel> colors_;
         vector<Image*> himage_;               // each image in himage_ corresponds to a horizontal color
         vector<Image*> vimage_;               // each image in vimage_ corresponds to a vertical color
-        void genTiles(int hc, int vc);        // generate tile MODELS, bet on probability
+        void genTiles();                      // generate tile MODELS, bet on probability
         int getRandomTile(int up, int left);  // randomly select a tile with matching NW edge
-        Image* genDummyTile(int n, int e, int s, int w, int tw, int th);
+        Image* genDummyTile(int n, int e, int s, int w);
         void genColors();
 
 

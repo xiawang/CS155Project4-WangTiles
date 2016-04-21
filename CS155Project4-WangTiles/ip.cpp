@@ -16,12 +16,12 @@ Image* ip_tile (Image* src, int hc, int vc, int w, int h, int tw, int th, bool s
     cout << "vc is: "  << vc << endl;
     if (source == true) {  // use input image for texture
         cout << "use input image for texture" << endl;
-        Tiles* t  = new Tiles(tw, th);
-        return t->tilePlain(w, h, tw, th);
+        Tiles* t  = new Tiles(hc, vc, tw, th);
+        return t->tilePlain(w, h);
     } else {  // use colored quads for texture
         cout << "use colored quads for texture" << endl;
-        Tiles* t  = new Tiles(tw, th);
-        return t->tilePlain(w, h, tw, th);
+        Tiles* t  = new Tiles(hc, vc, tw, th);
+        return t->tilePlain(w, h);
     }
 
 }
