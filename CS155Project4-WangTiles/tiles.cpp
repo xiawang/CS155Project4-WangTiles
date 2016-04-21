@@ -119,23 +119,14 @@ Image* Tiles::genDummyTile(int n, int e, int s, int w, int tw, int th){
     
     vector<Pixel> vtiles;
     vector<Pixel> htiles;
-    vector<Pixel> colors;
-    
-    Image* dumb = new Image(tw,th);
-    for (int i=0; i<8; i++) {
-        int digit0 = (i>>0)&1;
-        int digit1 = (i>>1)&1;
-        int digit2 = (i>>2)&1;
-        cout << digit0 << digit1 << digit2 << endl;
-        Pixel* tempp = new Pixel(digit0,digit1,digit2);
-        colors.push_back(*tempp);
-    }
     
     htiles.push_back(colors_[0]);
     htiles.push_back(colors_[1]);
     
     vtiles.push_back(colors_[2]);
     vtiles.push_back(colors_[3]);
+    
+    Image* dumb = new Image(tw,th);
     
 //    Pixel* r = new Pixel(1,0,0);
 //    Pixel* g = new Pixel(0,1,0);
