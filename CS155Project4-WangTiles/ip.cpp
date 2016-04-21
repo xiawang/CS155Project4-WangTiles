@@ -10,12 +10,19 @@
 /*
  * tiling a plain using Wang tiles
  */
-Image* ip_tile (Image* src, int hc, int vc, int w, int h, bool source)
+Image* ip_tile (Image* src, int hc, int vc, int w, int h, int tw, int th, bool source)
 {
     cout << "hc is: "  << hc << endl;
     cout << "vc is: "  << vc << endl;
-    Tiles* t  = new Tiles();
-    return t->tilePlain(w, h);
+    if (source == true) {  // use input image for texture
+        cout << "use input image for texture" << endl;
+        Tiles* t  = new Tiles(tw, th);
+        return t->tilePlain(w, h, tw, th);
+    } else {  // use colored quads for texture
+        cout << "use colored quads for texture" << endl;
+        Tiles* t  = new Tiles(tw, th);
+        return t->tilePlain(w, h, tw, th);
+    }
 
 }
 

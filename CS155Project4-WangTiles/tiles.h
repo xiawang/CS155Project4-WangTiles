@@ -17,11 +17,13 @@ class Tile
         void setDown(int d);
         void setLeft(int l);
         void setRight(int r);
+        void setSize(int s);
         void setTexture(Image* src);
         int getUp();
         int getDown();
         int getRight();
         int getLeft();
+        int getSize();
         Image* getTexture();
     
         bool validNeighbor(int up, int left);
@@ -35,6 +37,7 @@ class Tile
         int down_;
         int left_;
         int right_;
+        int tilesize_;
         Image* tex_;
 };
 
@@ -42,10 +45,10 @@ class Tile
 class Tiles
 {
     public:
-        Tiles();   // default constructor for testing, using dummy models in tiles folder
+        Tiles(int tw, int th);   // default constructor for testing, using dummy models in tiles folder
                    // Ignores the source image, but uses specified width and height
         Tiles(Image* scr, int hc, int vc);
-        Image* tilePlain(int w, int h); // generete FINAL RESULT!
+        Image* tilePlain(int w, int h, int tw, int th); // generete FINAL RESULT!
 
     private:
         friend class Tile;
@@ -55,7 +58,7 @@ class Tiles
         vector<Image*> vimage_;               // each image in vimage_ corresponds to a vertical color
         void genTiles(int hc, int vc);        // generate tile MODELS, bet on probability
         int getRandomTile(int up, int left);  // randomly select a tile with matching NW edge
-        Image* genDummyTile(int n, int e, int s, int w);
+        Image* genDummyTile(int n, int e, int s, int w, int tw, int th);
 
 
 

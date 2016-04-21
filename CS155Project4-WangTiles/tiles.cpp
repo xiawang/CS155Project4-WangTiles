@@ -43,6 +43,10 @@ void Tile::setRight(int r){
     right_ = r;
 }
 
+void Tile::setSize(int s){
+    tilesize_ = s;
+}
+
 void Tile::setTexture(Image* src){
     tex_ = src;
 }
@@ -61,6 +65,10 @@ int Tile::getRight(){
 
 int Tile::getLeft(){
     return left_;
+}
+
+int Tile::getSize(){
+    return tilesize_;
 }
 
 Image* Tile::getTexture(){
@@ -93,13 +101,13 @@ Tile::~Tile()
 {
 }
 
-Image* Tiles::genDummyTile(int n, int e, int s, int w){
+Image* Tiles::genDummyTile(int n, int e, int s, int w, int tw, int th){
     
     vector<Pixel> vtiles;
     vector<Pixel> htiles;
     
-    Image* dumb = new Image(tileWidth,tileHeight);
-    Pixel* r = new Pixel(1,0,0);
+    Image* dumb = new Image(tw,th);
+    Pixel* r = new Pixel(1,0,1);
     Pixel* g = new Pixel(0,1,0);
     Pixel* y = new Pixel(1,1,0);
     Pixel* b = new Pixel(0,0,1);
@@ -111,10 +119,10 @@ Image* Tiles::genDummyTile(int n, int e, int s, int w){
     vtiles.push_back(*b);
     
     
-    for (int i = 0; i < tileWidth; i++){
-        for (int j = 0; j < tileHeight; j++){
+    for (int i = 0; i < tw; i++){
+        for (int j = 0; j < th; j++){
             if (i > j){
-                if ((50-i) > j){
+                if ((tw-i) > j){
                     // North
                     dumb->setPixel(i, j, htiles[n-1]);
                 } else {
@@ -122,7 +130,7 @@ Image* Tiles::genDummyTile(int n, int e, int s, int w){
                     dumb->setPixel(i, j, vtiles[e-1]);
                 }
             } else {
-                if ((50-i) < j){
+                if ((th-i) < j){
                     // South
                     dumb->setPixel(i, j, htiles[s-1]);
                 } else {
@@ -138,62 +146,62 @@ Image* Tiles::genDummyTile(int n, int e, int s, int w){
 
 
 // Dummy constructor for testing using models in tiles folder
-Tiles::Tiles(){
+Tiles::Tiles(int tw, int th){
     
     //1111
     Tile* t1 = new Tile(1,1);
     t1->setRight(1);
     t1->setDown(1);
-    t1->setTexture(genDummyTile(1,1,1,1));
+    t1->setTexture(genDummyTile(1,1,1,1,tw,th));
     tiles_.push_back(*t1);
     
     //1122
     Tile* t2 = new Tile(1,2);
     t2->setRight(1);
     t2->setDown(2);
-    t2->setTexture(genDummyTile(1,1,2,2));
+    t2->setTexture(genDummyTile(1,1,2,2,tw,th));
     tiles_.push_back(*t2);
     
     //1212
     Tile* t3 = new Tile(1,2);
     t3->setRight(2);
     t3->setDown(1);
-    t3->setTexture(genDummyTile(1,2,1,2));
+    t3->setTexture(genDummyTile(1,2,1,2,tw,th));
     tiles_.push_back(*t3);
     
     //1221
     Tile* t4 = new Tile(1,1);
     t4->setRight(2);
     t4->setDown(2);
-    t4->setTexture(genDummyTile(1,2,2,1));
+    t4->setTexture(genDummyTile(1,2,2,1,tw,th));
     tiles_.push_back(*t4);
     
     //2112
     Tile* t5 = new Tile(2,2);
     t5->setRight(1);
     t5->setDown(1);
-    t5->setTexture(genDummyTile(2,1,1,2));
+    t5->setTexture(genDummyTile(2,1,1,2,tw,th));
     tiles_.push_back(*t5);
     
     //2121
     Tile* t6 = new Tile(2,1);
     t6->setRight(1);
     t6->setDown(2);
-    t6->setTexture(genDummyTile(2,1,2,1));
+    t6->setTexture(genDummyTile(2,1,2,1,tw,th));
     tiles_.push_back(*t6);
     
     //2211
     Tile* t7 = new Tile(2,1);
     t7->setRight(2);
     t7->setDown(1);
-    t7->setTexture(genDummyTile(2,2,1,1));
+    t7->setTexture(genDummyTile(2,2,1,1,tw,th));
     tiles_.push_back(*t7);
     
     //2222
     Tile* t8 = new Tile(2,2);
     t8->setRight(2);
     t8->setDown(2);
-    t8->setTexture(genDummyTile(2,2,2,2));
+    t8->setTexture(genDummyTile(2,2,2,2,tw,th));
     tiles_.push_back(*t8);
 }
 
@@ -249,12 +257,12 @@ int Tiles::getRandomTile(int up, int left){
  * given desired width w and desired height h,
  * generate a tiled plain of that size
  */
-Image* Tiles::tilePlain(int w, int h)
+Image* Tiles::tilePlain(int w, int h, int tw, int th)
 {
     
     Image* dest = new Image(w, h);
-    int nh = w/tileWidth + 1;                // number of tiles horizontally
-    int nv = h/tileHeight + 1;               // number of tiles vertically
+    int nh = w/tw + 1;                // number of tiles horizontally
+    int nv = h/th + 1;               // number of tiles vertically
     int tileModel[nv][nh];                   // a 2D array that specify types of tiles used
     
     tileModel[0][0] = rand() % tiles_.size();
@@ -278,9 +286,9 @@ Image* Tiles::tilePlain(int w, int h)
     for (int i = 0; i < h; i ++){
         for (int j = 0; j < w; j++){
             
-            int tileIndex = tileModel[i / tileHeight][j / tileWidth];
+            int tileIndex = tileModel[i / th][j / tw];
             Tile t = tiles_[tileIndex];
-            Pixel p = t.getTexture()->getPixel(j % tileWidth,i % tileHeight);
+            Pixel p = t.getTexture()->getPixel(j % tw,i % th);
             dest->setPixel(j, i, p);
         }
     }

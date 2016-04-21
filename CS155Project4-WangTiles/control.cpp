@@ -457,6 +457,8 @@ void process_func (int value)
             int vc;
             int w;
             int h;
+            int tw;
+            int th;
             std::string source;
             bool s;
             cout << "Please specify number of horizontal colors: " << endl;
@@ -467,6 +469,10 @@ void process_func (int value)
             cin >> w;
             cout << "Please specify desired height: " << endl;
             cin >> h;
+            cout << "Please specify tile width (square): " << endl;
+            cin >> tw;
+            cout << "Please specify tile height (square): " << endl;
+            cin >> th;
             cout << "Would you like to use the image as the texture source? Type 'y' to use input image, or 'n' to use colored quads: " << endl;
             cin >> source;
             if (source == "y") {
@@ -474,7 +480,7 @@ void process_func (int value)
             } else {
                 s = false;
             }
-            resultImage = ip_tile(currentImage, hc, vc, w, h, s);
+            resultImage = ip_tile(currentImage, hc, vc, w, h, tw, th, s);
             break;
         }
         case M_PROCESS_QUANTIZE_SIMPLE:  // enum #21

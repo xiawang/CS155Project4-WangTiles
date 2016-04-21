@@ -31,7 +31,7 @@
 #define I_BILINEAR	1
 #define I_GAUSSIAN	2
 
-Image*  ip_tile (Image* src, int hc, int vc, int w, int h, bool source);
+Image*  ip_tile (Image* src, int hc, int vc, int w, int h, int tw, int th, bool source);
 Image*	ip_blur_box (Image* src, int size);
 Image*	ip_blur_gaussian (Image* src, int size, double sigma);
 Image*	ip_blur_triangle (Image* src, int size);
