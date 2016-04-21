@@ -102,8 +102,9 @@ Tile::~Tile()
 }
 
 void Tiles::genColors(){
+    
     vector<Pixel> colors;
-    for (int i=0; i<8; i++) {
+    for (int i=0; i<(hc_ + vc_); i++) {
         int digit0 = (i>>0)&1;
         int digit1 = (i>>1)&1;
         int digit2 = (i>>2)&1;
@@ -120,8 +121,8 @@ Image* Tiles::genDummyTile(int n, int e, int s, int w){
     vector<Pixel> vtiles;
     vector<Pixel> htiles;
     
-    for (int i = 0; i < hc + vc; i++){
-        if (i < hc){
+    for (int i = 0; i < hc_ + vc_; i++){
+        if (i < hc_){
             htiles.push_back(colors_[i]);
         } else {
             vtiles.push_back(colors_[i]);
