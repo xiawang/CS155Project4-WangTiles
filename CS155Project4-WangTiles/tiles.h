@@ -24,7 +24,6 @@ class Tile
         Image* getTexture();
     
         bool validNeighbor(int up, int left);
-        void genTexture();
         ~Tile ();
         
         
@@ -48,6 +47,7 @@ class Tiles
         Image* tilePlain(int w, int h); // generete FINAL RESULT!
 
     private:
+    
         friend class Tile;
         int hc_;
         int vc_;
@@ -60,9 +60,8 @@ class Tiles
         vector<Image*> vimage_;               // each image in vimage_ corresponds to a vertical color
         void genTiles();                      // generate tile MODELS, bet on probability
         int getRandomTile(int up, int left);  // randomly select a tile with matching NW edge
-        Image* genDummyTile(int n, int e, int s, int w);
         void genColors();
-
-
+        Image* genDummyTexture(int n, int e, int s, int w);
+        Image* genTextures(int n, int e, int s, int w);
 
 };
