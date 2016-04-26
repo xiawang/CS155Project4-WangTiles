@@ -46,6 +46,7 @@ enum {
     M_PROCESS_SEPIA = 34,
     M_PROCESS_SCALE=26,
     M_PROCESS_TILE=42,
+    M_PROCESS_QUILT=47,
     
     M_PROCESS_SET_SAMPLING_BILINEAR=27,
     M_PROCESS_SET_SAMPLING_NEAREST=28,
@@ -111,6 +112,7 @@ int make_menu ()
     glutAddMenuEntry( "Sepia tone", M_PROCESS_SEPIA);
     glutAddMenuEntry( "Threshold...",	M_PROCESS_THRESHOLD);
     glutAddMenuEntry("Plain tiling...", M_PROCESS_TILE);
+    glutAddMenuEntry("Image quilting...", M_PROCESS_QUILT);
     glutAddSubMenu( "Warp", warp);
     
     
@@ -483,6 +485,26 @@ void process_func (int value)
             resultImage = ip_tile(currentImage, hc, vc, w, h, tw, th, s);
             break;
         }
+            
+        case M_PROCESS_QUILT:
+        {
+            int patch_size;
+            int patch_num;
+            int num_h;
+            int num_w;
+            cout << "Please specify the patch size (pixel): " << endl;
+            cin >> patch_size;
+            cout << "Please specify number of patches (should be a squre number): " << endl;
+            cin >> patch_num;
+            cout << "Please specify number of patches for the result height: " << endl;
+            cin >> num_h;
+            cout << "Please specify number of patches for the result width: " << endl;
+            cin >> num_w;
+            
+            resultImage = ip_quilt (currentImage, patch_size, patch_num, num_h, num_w);
+            break;
+        }
+        
         case M_PROCESS_QUANTIZE_SIMPLE:  // enum #21
         {
             

@@ -27,6 +27,64 @@ Image* ip_tile (Image* src, int hc, int vc, int w, int h, int tw, int th, bool s
 }
 
 
+/*
+ * randomly quilt the image
+ * Now it only chop the source image into patches and
+ * randomly pick some to reconstruct a new texture.
+ */
+Image* ip_quilt (Image* src, int patch_size, double patch_num, int num_h, int num_w)
+{
+    int width = src->getWidth();
+    int height = src->getHeight();
+    int size  = int(sqrt(patch_num));
+    Image* dest = new Image(num_w*patch_size,num_h*patch_size);
+    
+    //get patches
+    vector<Image*> patches;
+    for (int i=0; i<size; i++) {
+        for (int j=0; j<size; j++) {
+            Image* patch = new Image(patch_size,patch_size);
+            for (int m=0; m<patch_size; m++) {
+                for (int n=0; n<patch_size; n++) {
+                    double w = m + i*patch_size;
+                    double h = n + j*patch_size;
+                    double r = src->getPixel(w, h, 0);
+                    double g = src->getPixel(w, h, 1);
+                    double b = src->getPixel(w, h, 2);
+                    patch->setPixel(m, n, 0, r);
+                    patch->setPixel(m, n, 1, g);
+                    patch->setPixel(m, n, 2, b);
+                }
+            }
+            patches.push_back(patch);
+        }
+    }
+    
+    random_shuffle ( patches.begin(), patches.end() );
+    
+    //create textures
+    for (int i=0; i<num_w; i++) {
+        for (int j=0; j<num_h; j++) {
+            int randimg = rand() % int(patch_num);
+            Image* patch = patches[randimg];
+            for (int m=0; m<patch_size; m++) {
+                for (int n=0; n<patch_size; n++) {
+                    double w = m + i*patch_size;
+                    double h = n + j*patch_size;
+                    double r = patch->getPixel(m, n, 0);
+                    double g = patch->getPixel(m, n, 1);
+                    double b = patch->getPixel(m, n, 2);
+                    dest->setPixel(w, h, 0, r);
+                    dest->setPixel(w, h, 1, g);
+                    dest->setPixel(w, h, 2, b);
+                }
+            }
+        }
+    }
+    return dest;
+}
+
+
 
 /*
  * convolve with a box filter
