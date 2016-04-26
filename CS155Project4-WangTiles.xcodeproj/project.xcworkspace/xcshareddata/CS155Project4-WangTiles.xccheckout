@@ -7,14 +7,14 @@
 	<key>IDESourceControlProjectIdentifier</key>
 	<string>6FDB4F86-0842-4AC9-B237-74C1036A44D2</string>
 	<key>IDESourceControlProjectName</key>
-	<string>CS155Project4-WangTiles</string>
+	<string>project</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>CADC7988571EC3ED315C55EF6DA2C14B0560E1FE</key>
 		<string>https://github.com/xiawang/CS155Project4-WangTiles.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>CS155Project4-WangTiles.xcodeproj</string>
+	<string>CS155Project4-WangTiles.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>CADC7988571EC3ED315C55EF6DA2C14B0560E1FE</key>
