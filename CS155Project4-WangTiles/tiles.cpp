@@ -2,6 +2,7 @@
 #include <time.h>
 #include <iostream>
 #include "image.h"
+#include "ip.h"
 
 
 /*

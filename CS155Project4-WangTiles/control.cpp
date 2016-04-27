@@ -489,19 +489,22 @@ void process_func (int value)
         case M_PROCESS_QUILT:
         {
             int patch_size;
-            int patch_num;
+            int patch_w;
+            int patch_h;
             int num_h;
             int num_w;
             cout << "Please specify the patch size (pixel): " << endl;
             cin >> patch_size;
-            cout << "Please specify number of patches (should be a squre number): " << endl;
-            cin >> patch_num;
+            cout << "Please specify number of patches to sample in a row: " << endl;
+            cin >> patch_w;
+            cout << "Please specify number of patches to sample in a column: " << endl;
+            cin >> patch_h;
             cout << "Please specify number of patches for the result height: " << endl;
             cin >> num_h;
             cout << "Please specify number of patches for the result width: " << endl;
             cin >> num_w;
             
-            resultImage = ip_quilt (currentImage, patch_size, patch_num, num_h, num_w);
+            resultImage = ip_quilt (currentImage, patch_size, patch_w, patch_h, num_h, num_w);
             break;
         }
         

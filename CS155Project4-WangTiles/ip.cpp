@@ -32,17 +32,16 @@ Image* ip_tile (Image* src, int hc, int vc, int w, int h, int tw, int th, bool s
  * Now it only chop the source image into patches and
  * randomly pick some to reconstruct a new texture.
  */
-Image* ip_quilt (Image* src, int patch_size, double patch_num, int num_h, int num_w)
+Image* ip_quilt (Image* src, int patch_size, double patch_w, double patch_h, int num_h, int num_w)
 {
     int width = src->getWidth();
     int height = src->getHeight();
-    int size  = int(sqrt(patch_num));
     Image* dest = new Image(num_w*patch_size,num_h*patch_size);
     
     //get patches
     vector<Image*> patches;
-    for (int i=0; i<size; i++) {
-        for (int j=0; j<size; j++) {
+    for (int i=0; i<patch_w; i++) {
+        for (int j=0; j<patch_h; j++) {
             Image* patch = new Image(patch_size,patch_size);
             for (int m=0; m<patch_size; m++) {
                 for (int n=0; n<patch_size; n++) {
@@ -65,8 +64,8 @@ Image* ip_quilt (Image* src, int patch_size, double patch_num, int num_h, int nu
     //create textures
     for (int i=0; i<num_w; i++) {
         for (int j=0; j<num_h; j++) {
-            int randimg = rand() % int(patch_num);
-            Image* patch = patches[randimg];
+            int img = num_h*i + j;
+            Image* patch = patches[img];
             for (int m=0; m<patch_size; m++) {
                 for (int n=0; n<patch_size; n++) {
                     double w = m + i*patch_size;
