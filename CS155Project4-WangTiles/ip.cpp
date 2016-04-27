@@ -45,8 +45,11 @@ Image* ip_quilt (Image* src, int patch_size, double patch_w, double patch_h, int
             Image* patch = new Image(patch_size,patch_size);
             for (int m=0; m<patch_size; m++) {
                 for (int n=0; n<patch_size; n++) {
-                    double w = m + i*patch_size;
-                    double h = n + j*patch_size;
+                    
+                    // Wrap around edges
+                    double w = (m + i*patch_size) % width;
+                    double h = (n + j*patch_size) % height;
+                    
                     double r = src->getPixel(w, h, 0);
                     double g = src->getPixel(w, h, 1);
                     double b = src->getPixel(w, h, 2);
@@ -64,7 +67,7 @@ Image* ip_quilt (Image* src, int patch_size, double patch_w, double patch_h, int
     //create textures
     for (int i=0; i<num_w; i++) {
         for (int j=0; j<num_h; j++) {
-            int img = num_h*i + j;
+            int img = (num_h*i + j) % patches.size();
             Image* patch = patches[img];
             for (int m=0; m<patch_size; m++) {
                 for (int n=0; n<patch_size; n++) {
