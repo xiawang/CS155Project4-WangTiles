@@ -16,16 +16,6 @@ Tile::Tile(int up, int left){
     left_ = left;
 }
 
-/*
- * gen a tile with four colors specified, 
- * generate the corresponding texture and store in tex_
- *
- * look at himage_ and vimage_, merge corresponding squares into diamond,
- * and crop the middle to get the texture
- */
-void Tile::genTexture(){
-    
-}
 
 // a bunch of sets and gets
 void Tile::setUp(int u){
@@ -117,7 +107,24 @@ void Tiles::genColors(){
     colors_ = colors;
 }
 
-Image* Tiles::genDummyTile(int n, int e, int s, int w){
+
+/*
+ * for each tile with four colors specified,
+ * generate the corresponding textures and store in tex_
+ *
+ * look at himage_ and vimage_, merge corresponding squares into diamond,
+ * and crop the middle to get the texture
+ */
+Image* Tiles::genTextures(int n, int e, int s, int w){
+    
+    Image* tex = new Image(tw_, th_);
+    
+    return tex;
+    
+}
+
+
+Image* Tiles::genDummyTexture(int n, int e, int s, int w){
     
     vector<Pixel> vtiles;
     vector<Pixel> htiles;
@@ -172,7 +179,7 @@ Tiles::Tiles(int hc, int vc, int tw, int th){
     
     for (int i = 0; i < tiles_.size(); i++){
         Tile* t = &tiles_[i];
-        t->setTexture(genDummyTile(t->getUp(), t->getRight(), t->getDown(), t->getLeft()));
+        t->setTexture(genDummyTexture(t->getUp(), t->getRight(), t->getDown(), t->getLeft()));
     }
     
 
@@ -195,8 +202,9 @@ Tiles::Tiles(Image* scr, int hc, int vc, int tw, int th)
     genTiles();
     
     // generate texture for each tile model
-    for (Tile t : tiles_){
-        t.genTexture();
+    for (int i = 0; i < tiles_.size(); i++){
+        Tile* t = &tiles_[i];
+        t->setTexture(genTextures(t->getUp(), t->getRight(), t->getDown(), t->getLeft()));
     }
         
     
@@ -240,7 +248,6 @@ void Tiles::genTiles(){
             
         }
     }
-    
 }
 
 
@@ -268,8 +275,8 @@ Image* Tiles::tilePlain(int w, int h)
 {
     
     Image* dest = new Image(w, h);
-    int nh = w/tw_ + 1;                // number of tiles horizontally
-    int nv = h/th_ + 1;               // number of tiles vertically
+    int nh = w/tw_ + 1;                      // number of tiles horizontally
+    int nv = h/th_ + 1;                      // number of tiles vertically
     int tileModel[nv][nh];                   // a 2D array that specify types of tiles used
     
     tileModel[0][0] = rand() % tiles_.size();
