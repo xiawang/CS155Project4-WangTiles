@@ -62,12 +62,14 @@ Image* ip_quilt (Image* src, int patch_size, double patch_w, double patch_h, int
         }
     }
     
-    random_shuffle ( patches.begin(), patches.end() );
+    //random_shuffle ( patches.begin(), patches.end() );
     
     //create textures
     for (int i=0; i<num_w; i++) {
         for (int j=0; j<num_h; j++) {
-            int img = (num_h*i + j) % patches.size();
+            //int img = (num_h*i + j) % patches.size();
+            
+            int img = rand() % patches.size();
             Image* patch = patches[img];
             for (int m=0; m<patch_size; m++) {
                 for (int n=0; n<patch_size; n++) {
