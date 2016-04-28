@@ -162,6 +162,150 @@ void Tiles::initTextures(Image* src){
 }
 
 
+vector<int> Tiles::getVerticalSeam(int n, int e, int s, int w){
+    
+    Image* north = himage_[n];
+    Image* east = vimage_[e];
+    Image* south = himage_[s];
+    Image* west = vimage_[w];
+    
+    int wt = tw_/sqrt(2)*0.2;
+    int ht = tw_/sqrt(2)*2;
+    
+    Image* nw_se_1 = new Image(wt, ht);
+    Image* nw_se_2 = new Image(wt, ht);
+    
+    // generate vertical overlap
+    for (int i = 0; i < wt; i++){
+        for (int j = 0; j < ht; j++){
+            
+            Pixel p_nw;
+            Pixel p_se;
+            if (j < tw_/sqrt(2)){
+                p_nw = north->getPixel(north->getWidth() - wt + i, j);
+                p_se = east->getPixel(i, j);
+            } else {
+                p_nw = west->getPixel(west->getWidth() - wt + i, j);
+                p_se = south->getPixel(i, j);
+            }
+            
+            // nw_se_1 is the overlap contributed by NW
+            nw_se_1->setPixel(i, j, 0, p_nw.getColor(0));
+            nw_se_1->setPixel(i, j, 1, p_nw.getColor(1));
+            nw_se_1->setPixel(i, j, 2, p_nw.getColor(2));
+            
+            // nw_se_2 is the overlap contributed by SE
+            nw_se_2->setPixel(i, j, 0, p_se.getColor(0));
+            nw_se_2->setPixel(i, j, 1, p_se.getColor(1));
+            nw_se_2->setPixel(i, j, 2, p_se.getColor(2));
+            
+        }
+    }
+    
+    // get the dividing seam with least difference between nw_se_1 and nw_se_2
+    vector<int> v_carve = seamCarving(nw_se_1, nw_se_2);
+    return v_carve;
+    
+}
+
+
+vector<int> Tiles::getHorizontalSeam(int n, int e, int s, int w){
+    
+    Image* north = himage_[n];
+    Image* east = vimage_[e];
+    Image* south = himage_[s];
+    Image* west = vimage_[w];
+    
+    int wt = tw_/sqrt(2)*0.2;
+    int ht = tw_/sqrt(2)*2;
+    
+    Image* ne_sw_1 = new Image(wt, ht);
+    Image* ne_sw_2 = new Image(wt, ht);
+    
+    // generate horizonal overlap (represented as vertical images)
+    for (int i = 0; i < wt; i++){
+        for (int j = 0; j < ht; j++){
+            
+            Pixel p_ne;
+            Pixel p_sw;
+            if (j < tw_/sqrt(2)){
+                p_ne = north->getPixel(j, north->getHeight() - wt + i);
+                p_sw = west->getPixel(j, i);
+            } else {
+                p_ne = east->getPixel(j, east->getHeight() - wt + i);
+                p_sw = south->getPixel(j, i);
+            }
+            
+            // ne_sw_1 is the overlap contributed by NE
+            ne_sw_1->setPixel(i, j, 0, p_ne.getColor(0));
+            ne_sw_1->setPixel(i, j, 1, p_ne.getColor(1));
+            ne_sw_1->setPixel(i, j, 2, p_ne.getColor(2));
+            
+            // ne_sw_2 is the overlap contributed by SW
+            ne_sw_1->setPixel(i, j, 0, p_sw.getColor(0));
+            ne_sw_1->setPixel(i, j, 1, p_sw.getColor(1));
+            ne_sw_1->setPixel(i, j, 2, p_sw.getColor(2));
+            
+        }
+    }
+    
+    // get the dividing seam with least difference between ne_sw_1 and ne_sw_2
+    vector<int> h_carve = seamCarving(ne_sw_1, ne_sw_2);
+    
+    return h_carve;
+    
+}
+
+Image* Tiles::genCollage(int n, int e, int s, int w){
+    
+    Image* north = himage_[n];
+    Image* east = vimage_[e];
+    Image* south = himage_[s];
+    Image* west = vimage_[w];
+    
+    // get the dividing seams
+    vector<int> v_carve = getVerticalSeam(n, e, s, w);
+    vector<int> h_carve = getHorizontalSeam(n, e, s, w);
+    
+    
+    // generate collated image
+    int col_size = tw_*sqrt(2);
+    Image* collage = new Image(col_size, col_size);
+    
+    for (int i = 0; i < col_size; i++){ // x
+        for (int j = 0; j < col_size; j++){  // y
+            
+            bool left = i < v_carve[j] + tw_/sqrt(2) * 0.9;
+            bool up = j < h_carve[i] + tw_/sqrt(2) * 0.9;
+            
+            Pixel cp;
+            if (left){
+                if (up){
+                    // use north
+                    cp = north->getPixel(i, j);
+                } else {
+                    // use west
+                    cp = west->getPixel(i, j - tw_/sqrt(2) * 0.9);
+                }
+            } else {
+                if (up){
+                    // use east
+                    cp = east->getPixel(i - tw_/sqrt(2) * 0.9, j);
+                } else {
+                    // use south
+                    cp = south->getPixel(i - tw_/sqrt(2) * 0.9, j - tw_/sqrt(2) * 0.9);
+                }
+            }
+            
+        }
+    }
+    
+    return collage;
+    
+    
+}
+
+
 /*
  * for each tile with four colors specified,
  * generate the corresponding textures and store in tex_
@@ -171,10 +315,11 @@ void Tiles::initTextures(Image* src){
  */
 Image* Tiles::genTextures(int n, int e, int s, int w){
     
+
+    Image* collage = genCollage(n, e, s, w);
     Image* tex = new Image(tw_, th_);
     
-    
-    
+    // TODO::sample the center of the collated image
     
     return tex;
     
