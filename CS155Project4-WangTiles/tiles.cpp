@@ -110,7 +110,7 @@ void Tiles::initColors(){
 
 void Tiles::initTextures(Image* src){
     
-    int patch_size = tw_/sqrt(2);
+    int patch_size = tw_/sqrt(2)*1.1;  // allow 0.1 for overlapping
     int width = src->getWidth();
     int height = src->getHeight();
     
@@ -171,6 +171,9 @@ void Tiles::initTextures(Image* src){
 Image* Tiles::genTextures(int n, int e, int s, int w){
     
     Image* tex = new Image(tw_, th_);
+    
+    
+    
     
     return tex;
     
