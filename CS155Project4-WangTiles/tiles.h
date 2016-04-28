@@ -1,5 +1,6 @@
 #include "image.h"
 #include <vector>
+#define OVERLAP 0.05
 
 using namespace std;
 

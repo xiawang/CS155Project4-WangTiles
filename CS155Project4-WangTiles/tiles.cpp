@@ -111,7 +111,7 @@ void Tiles::initColors(){
 
 void Tiles::initTextures(Image* src){
     
-    int patch_size = tw_/sqrt(2)*1.1;  // allow 0.1 for overlapping
+    int patch_size = tw_/sqrt(2)*(1+OVERLAP);
     int width = src->getWidth();
     int height = src->getHeight();
     
@@ -175,7 +175,7 @@ vector<int> Tiles::getVerticalSeam(int n, int e, int s, int w){
     Image* south = himage_[s];
     Image* west = vimage_[w];
     
-    int wt = tw_/sqrt(2)*0.2;
+    int wt = tw_/sqrt(2)* OVERLAP * 2;
     int ht = tw_/sqrt(2)*2;
     
     Image* nw_se_1 = new Image(wt, ht);
@@ -222,7 +222,7 @@ vector<int> Tiles::getHorizontalSeam(int n, int e, int s, int w){
     Image* south = himage_[s];
     Image* west = vimage_[w];
     
-    int wt = tw_/sqrt(2)*0.2;
+    int wt = tw_/sqrt(2)*OVERLAP*2;
     int ht = tw_/sqrt(2)*2;
     
     Image* ne_sw_1 = new Image(wt, ht);
@@ -269,6 +269,8 @@ Image* Tiles::genCollage(int n, int e, int s, int w){
     Image* south = himage_[s];
     Image* west = vimage_[w];
     
+    double perc = 1 - OVERLAP;
+    
     // get the dividing seams
     vector<int> v_carve = getVerticalSeam(n, e, s, w);
     vector<int> h_carve = getHorizontalSeam(n, e, s, w);
@@ -281,8 +283,8 @@ Image* Tiles::genCollage(int n, int e, int s, int w){
     for (int i = 0; i < col_size; i++){ // x
         for (int j = 0; j < col_size; j++){  // y
             
-            bool left = i < v_carve[j] + tw_/sqrt(2) * 0.9;
-            bool up = j < h_carve[i] + tw_/sqrt(2) * 0.9;
+            bool left = i < v_carve[j] + tw_/sqrt(2) * perc;
+            bool up = j < h_carve[i] + tw_/sqrt(2) * perc;
             
             Pixel cp;
             if (left){
@@ -291,15 +293,15 @@ Image* Tiles::genCollage(int n, int e, int s, int w){
                     cp = north->getPixel(i, j);
                 } else {
                     // use west
-                    cp = west->getPixel(i, j - tw_/sqrt(2) * 0.9);
+                    cp = west->getPixel(i, j - tw_/sqrt(2) * perc);
                 }
             } else {
                 if (up){
                     // use east
-                    cp = east->getPixel(i - tw_/sqrt(2) * 0.9, j);
+                    cp = east->getPixel(i - tw_/sqrt(2) * perc, j);
                 } else {
                     // use south
-                    cp = south->getPixel(i - tw_/sqrt(2) * 0.9, j - tw_/sqrt(2) * 0.9);
+                    cp = south->getPixel(i - tw_/sqrt(2) * perc, j - tw_/sqrt(2) * perc);
                 }
             }
             
