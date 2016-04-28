@@ -368,10 +368,12 @@ Image* Tiles::getMiddleSquare (Image* src, double theta, int x, int y)
     
     int start = (sqrt(2)-1)*tw_/2;
     
-    Image* res = new Image(tw_, tw_);
-    for (int i = 0; i < tw_; i++){
-        for (int j = 0; j < tw_; j++){
-            Pixel p = dest->getPixel(start + i, start + j);
+    int off = 16;
+    
+    Image* res = new Image(tw_ - off, tw_ - off);
+    for (int i = 0; i < tw_ - off; i++){
+        for (int j = 0; j < tw_ - off; j++){
+            Pixel p = dest->getPixel(start + i + off, start + j + off);
             res->setPixel(i, j, p);
         }
     }
@@ -737,9 +739,13 @@ Image* Tiles::tilePlain(int w, int h)
 //    tw_ = tw_*sqrt(2);
 //    th_ = th_*sqrt(2);
     
+    int rth = tiles_[0].getTexture()->getHeight();
+    int rtw = tiles_[0].getTexture()->getWidth();
+    
+    
     Image* dest = new Image(w, h);
-    int nh = w/tw_ + 1;                      // number of tiles horizontally
-    int nv = h/th_ + 1;                      // number of tiles vertically
+    int nh = w/rtw + 1;                      // number of tiles horizontally
+    int nv = h/rth + 1;                      // number of tiles vertically
     int tileModel[nv][nh];                   // a 2D array that specify types of tiles used
     
     tileModel[0][0] = rand() % tiles_.size();
@@ -752,9 +758,6 @@ Image* Tiles::tilePlain(int w, int h)
             int left = (j == 0) ? -1 : tiles_[tileModel[i][j-1]].getRight();
             
             tileModel[i][j] = getRandomTile(up, left);
-            //cout << "i: " << i << endl;
-            //cout << "j: " << j << endl;
-            //cout << "model: " << tileModel[i][j] << endl;
             
         }
     }
@@ -763,14 +766,13 @@ Image* Tiles::tilePlain(int w, int h)
     for (int i = 0; i < h; i ++){
         for (int j = 0; j < w; j++){
             
-            int tileIndex = tileModel[i / th_][j / tw_];
+            int tileIndex = tileModel[i / rth][j / rtw];
             Tile t = tiles_[tileIndex];
-            Pixel p = t.getTexture()->getPixel(j % tw_,i % th_);
+            Pixel p = t.getTexture()->getPixel(j % rtw,i % rth);
             dest->setPixel(j, i, p);
         }
     }
     
-    // /Users/tingyu/Downloads/harry.bmp
     return dest;
     //return genTextures(1,1,2,2);
 }
