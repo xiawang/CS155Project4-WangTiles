@@ -110,7 +110,7 @@ void Tiles::initColors(){
 
 void Tiles::initTextures(Image* src){
     
-    int patch_size = sqrt(tw_);
+    int patch_size = tw_/sqrt(2);
     int width = src->getWidth();
     int height = src->getHeight();
     
