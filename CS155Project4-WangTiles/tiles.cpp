@@ -3,6 +3,7 @@
 #include <iostream>
 #include "image.h"
 #include "ip.h"
+#include <cmath>
 
 
 /*
@@ -329,8 +330,116 @@ int Tiles::colorDiff(double r, double g, double b){
     return res;
 }
 
-vector<int> Tiles::seamCarving(Image* src1, Image* srr2){
+vector<int> Tiles::seamCarving(Image* src1, Image* src2){
     vector<int> res;
+    int width = src1->getWidth();
+    int height = src1->getHeight();
+    
+    // calculate pixel color difference
+    Image* temp = new Image(width,height);
+    for (int w=0; w<width; w++){
+        for (int h=0;h<height; h++){
+            double r = abs(src1->getPixel_(w,h,0) - src2->getPixel_(w,h,0));
+            double g = abs(src1->getPixel_(w,h,1) - src2->getPixel_(w,h,1));
+            double b = abs(src1->getPixel_(w,h,2) - src2->getPixel_(w,h,2));
+            temp->setPixel_(w, h, 0, r);
+            temp->setPixel_(w, h, 1, g);
+            temp->setPixel_(w, h, 2, b);
+        }
+    }
+    
+    // create dp table
+    double **dp_table = new double*[height];
+    for (int x=0; x<height; x++){
+        dp_table[x] = new double[width];
+    }
+    double **bt_table = new double*[height];
+    for (int x=0; x<height; x++){
+        bt_table[x] = new double[width];
+    }
+    // initialize the frst row
+    for (int i = 0; i < width; i++) {
+        double r = temp->getPixel_(i,0,0);
+        double g = temp->getPixel_(i,0,1);
+        double b = temp->getPixel_(i,0,2);
+        dp_table[i][0] = colorDiff(r,g,b);
+    }
+    
+    for(int i=1; i<height; i++){
+        for(int j=0; j<width; j++){
+            double r = temp->getPixel_(j,i,0);
+            double g = temp->getPixel_(j,i,1);
+            double b = temp->getPixel_(j,i,2);
+            
+            // on the left
+            if (j == 0) {
+                double r2 = temp->getPixel_(j,i-1,0);
+                double g2 = temp->getPixel_(j,i-1,1);
+                double b2 = temp->getPixel_(j,i-1,2);
+                double r3 = temp->getPixel_(j+1,i-1,0);
+                double g3 = temp->getPixel_(j+1,i-1,1);
+                double b3 = temp->getPixel_(j+1,i-1,2);
+                dp_table[i][j] = colorDiff(r,g,b) + min(colorDiff(r2,g2,b2),colorDiff(r3,g3,b3));
+                if (colorDiff(r2,g2,b2)<=colorDiff(r3,g3,b3)) {
+                    bt_table[i][j] = j;
+                } else {
+                    bt_table[i][j] = j+1;
+                }
+            } else if (j > 0 && j < width-1) {  // middle
+                double r1 = temp->getPixel_(j-1,i-1,0);
+                double g1 = temp->getPixel_(j-1,i-1,1);
+                double b1 = temp->getPixel_(j-1,i-1,2);
+                double r2 = temp->getPixel_(j,i-1,0);
+                double g2 = temp->getPixel_(j,i-1,1);
+                double b2 = temp->getPixel_(j,i-1,2);
+                double r3 = temp->getPixel_(j+1,i-1,0);
+                double g3 = temp->getPixel_(j+1,i-1,1);
+                double b3 = temp->getPixel_(j+1,i-1,2);
+                dp_table[i][j] = colorDiff(r,g,b) + min(min(colorDiff(r1,g1,b1),colorDiff(r2,g2,b2)),colorDiff(r3,g3,b3));
+                if (colorDiff(r1,g1,b1)<=colorDiff(r2,g2,b2)) {
+                    if (colorDiff(r1,g1,b1)<=colorDiff(r3,g3,b3)) {
+                        bt_table[i][j] = j-1;
+                    } else {
+                        bt_table[i][j] = j+1;
+                    }
+                } else {
+                    if (colorDiff(r2,g2,b2)<=colorDiff(r3,g3,b3)) {
+                        bt_table[i][j] = j;
+                    } else {
+                        bt_table[i][j] = j+1;
+                    }
+                }
+            } else {  // on the right
+                double r1 = temp->getPixel_(j-1,i-1,0);
+                double g1 = temp->getPixel_(j-1,i-1,1);
+                double b1 = temp->getPixel_(j-1,i-1,2);
+                double r2 = temp->getPixel_(i-1,j,0);
+                double g2 = temp->getPixel_(i-1,j,1);
+                double b2 = temp->getPixel_(i-1,j,2);
+                dp_table[i][j] = colorDiff(r,g,b) + min(colorDiff(r1,g1,b1),colorDiff(r2,g2,b2));
+                if (colorDiff(r1,g1,b1)<=colorDiff(r2,g2,b2)) {
+                    bt_table[i][j] = j-1;
+                } else {
+                    bt_table[i][j] = j;
+                }
+            }
+        }
+    }
+    
+    int min_bt = dp_table[height-1][0];
+    for (int i=1; i<width; i++) {
+        if (min_bt >= dp_table[height-1][i]) {
+            min_bt = dp_table[height-1][i];
+        }
+    }
+    
+    res.push_back(min_bt);
+    for (int i=height-1; i>0; i--) {
+        res.push_back(bt_table[i][min_bt]);
+        min_bt = bt_table[i][min_bt];
+    }
+    
+    reverse(res.begin(),res.end());
     
     return res;
 }
