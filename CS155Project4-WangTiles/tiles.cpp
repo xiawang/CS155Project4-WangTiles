@@ -185,8 +185,8 @@ vector<int> Tiles::getVerticalSeam(int n, int e, int s, int w){
                 p_nw = north->getPixel(north->getWidth() - wt + i, j);
                 p_se = east->getPixel(i, j);
             } else {
-                p_nw = west->getPixel(west->getWidth() - wt + i, j);
-                p_se = south->getPixel(i, j);
+                p_nw = west->getPixel(west->getWidth() - wt + i, j - (int)(tw_/sqrt(2)));
+                p_se = south->getPixel(i, j - (int)(tw_/sqrt(2)));
             }
             
             // nw_se_1 is the overlap contributed by NW
@@ -232,8 +232,8 @@ vector<int> Tiles::getHorizontalSeam(int n, int e, int s, int w){
                 p_ne = north->getPixel(j, north->getHeight() - wt + i);
                 p_sw = west->getPixel(j, i);
             } else {
-                p_ne = east->getPixel(j, east->getHeight() - wt + i);
-                p_sw = south->getPixel(j, i);
+                p_ne = east->getPixel(j - (int)(tw_/sqrt(2)), east->getHeight() - wt + i);
+                p_sw = south->getPixel(j - (int)(tw_/sqrt(2)), i);
             }
             
             // ne_sw_1 is the overlap contributed by NE
@@ -297,6 +297,8 @@ Image* Tiles::genCollage(int n, int e, int s, int w){
                 }
             }
             
+            collage->setPixel(i, j, cp);
+            
         }
     }
     
@@ -316,12 +318,12 @@ Image* Tiles::genCollage(int n, int e, int s, int w){
 Image* Tiles::genTextures(int n, int e, int s, int w){
     
 
-    Image* collage = genCollage(n, e, s, w);
-    Image* tex = new Image(tw_, th_);
+    Image* collage = genCollage(n-1, e-1, s-1, w-1);
+    //Image* tex = new Image(tw_, th_);
     
     // TODO::sample the center of the collated image
     
-    return tex;
+    return collage;
     
 }
 
@@ -586,7 +588,37 @@ vector<int> Tiles::seamCarving(Image* src1, Image* src2){
     
     reverse(res.begin(),res.end());
     
+    
+//    
+//    // TODELETE: dummy
+//    for (int i = 0; i < src1->getHeight(); i++){
+//        res.push_back(0);
+//    }
+    
     return res;
+}
+
+Image* Tiles::testSeamCarving(){
+    
+    vector<int> h_carve = seamCarving(himage_[0], himage_[1]);
+    
+    Image* pic  = new Image(himage_[0]->getWidth(), himage_[0]->getHeight());
+    for (int i = 0; i < himage_[0]->getWidth(); i++){
+        for (int j = 0; j < himage_[0]->getHeight(); j++){
+            
+            Pixel p;
+            if (i < h_carve[j]){
+                p = himage_[0] -> getPixel(i, j);
+            } else {
+                p = himage_[1] -> getPixel(i, j);
+            }
+            
+            pic->setPixel(i, j, p);
+        }
+    }
+    
+    
+    return pic;
 }
 
 
@@ -631,5 +663,7 @@ Image* Tiles::tilePlain(int w, int h)
     }
     
     
-    return dest;
+    //return dest;
+    
+    return testSeamCarving();
 }

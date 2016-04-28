@@ -72,5 +72,8 @@ class Tiles
     
         vector<int> getVerticalSeam(int n, int e, int s, int w);
         vector<int> getHorizontalSeam(int n, int e, int s, int w);
+    
+    
+        Image* testSeamCarving();
 
 };
