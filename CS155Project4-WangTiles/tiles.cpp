@@ -188,10 +188,10 @@ vector<int> Tiles::getVerticalSeam(int n, int e, int s, int w){
             Pixel p_nw;
             Pixel p_se;
             if (j < tw_/sqrt(2)){
-                p_nw = north->getPixel(north->getWidth() - wt + i, j);
+                p_nw = north->getPixel(north->getWidth() - 1 - wt + i, j);
                 p_se = east->getPixel(i, j);
             } else {
-                p_nw = west->getPixel(west->getWidth() - wt + i, j - (int)(tw_/sqrt(2)));
+                p_nw = west->getPixel(west->getWidth() - 1 - wt + i, j - (int)(tw_/sqrt(2)));
                 p_se = south->getPixel(i, j - (int)(tw_/sqrt(2)));
             }
             
@@ -326,12 +326,98 @@ Image* Tiles::genTextures(int n, int e, int s, int w){
 
     Image* collage = genCollage(n-1, e-1, s-1, w-1);
     //Image* tex = new Image(tw_, th_);
+    Image* rot = getMiddleSquare(collage, -45, collage->getWidth()/2, collage->getHeight()/2);
     
-    // TODO::sample the center of the collated image
     
-    return collage;
+    return rot;
     
 }
+
+
+Image* Tiles::getMiddleSquare (Image* src, double theta, int x, int y)
+{
+    float sin_val = sin(theta * M_PI / 180);
+    float cos_val = cos(theta * M_PI / 180);
+    
+    int width = src->getWidth();
+    int height = src->getHeight();
+    Image* dest = new Image(width, height);
+    // initialize as all black
+    for (int w=0; w<width; w++){
+        for (int h=0;h<height; h++){
+            int new_x = w - x;
+            int new_y = h - y;
+            // rotate point
+            float rot_x = new_x * cos_val - new_y * sin_val;
+            float rot_y = new_x * sin_val + new_y * cos_val;
+            rot_x += x;
+            rot_y += y;
+            // resemble
+            Pixel pix;
+            if (rot_x < 0 || rot_x >= width || rot_y < 0 || rot_y >= height) {
+                pix = Pixel(0, 0, 0);
+            } else {
+                pix = resamplePixel(src, rot_x, rot_y);
+            }
+            
+            dest->setPixel_(w, h, pix);
+        }
+    }
+    
+    int start = (sqrt(2)-1)*tw_/2;
+    
+    Image* res = new Image(tw_, tw_);
+    for (int i = 0; i < tw_; i++){
+        for (int j = 0; j < tw_; j++){
+            Pixel p = dest->getPixel(start + i, start + j);
+            res->setPixel(i, j, p);
+        }
+    }
+    return res;
+}
+
+
+Pixel Tiles::resamplePixel(Image* src, double x, double y){
+    int width = src->getWidth();
+    int height = src->getHeight();
+    int x1 = floor(x);
+    if(x1<0){
+        x1 = 0;
+    }else if(x1>width-2){
+        x1 = width-2;
+    }
+    int x2 = x1+1;
+    int y1 = floor(y);
+    if(y1<0){
+        y1 = 0;
+    }else if(y1>height-2){
+        y1 = height-2;
+    }
+    int y2 = y1+1;
+    Pixel upleft = src->getPixel(x1, y1);
+    Pixel downleft = src->getPixel(x1, y2);
+    Pixel upright = src->getPixel(x2, y1);
+    Pixel downright = src->getPixel(x2, y2);
+    Pixel average1 = takeWeightedAverage(upleft, upright, x2-x, x-x1);
+    Pixel average2 = takeWeightedAverage(downleft, downright, x2-x, x-x1);
+    Pixel average = takeWeightedAverage(average1, average2, y2-y, y-y1);
+    return average;
+}
+
+
+Pixel Tiles::takeWeightedAverage(Pixel pixel1, Pixel pixel2, double weight1, double weight2){
+    double r1 = pixel1.getColor(0);
+    double g1 = pixel1.getColor(1);
+    double b1 = pixel1.getColor(2);
+    double r2 = pixel2.getColor(0);
+    double g2 = pixel2.getColor(1);
+    double b2 = pixel2.getColor(2);
+    double r = r1*weight1 + r2*weight2;
+    double g = g1*weight1 + g2*weight2;
+    double b = b1*weight1 + b2*weight2;
+    return Pixel(r,g,b);
+}
+
 
 
 Image* Tiles::genDummyTexture(int n, int e, int s, int w){
@@ -646,6 +732,8 @@ Image* Tiles::testSeamCarving(){
  */
 Image* Tiles::tilePlain(int w, int h)
 {
+//    tw_ = tw_*sqrt(2);
+//    th_ = th_*sqrt(2);
     
     Image* dest = new Image(w, h);
     int nh = w/tw_ + 1;                      // number of tiles horizontally
@@ -680,8 +768,7 @@ Image* Tiles::tilePlain(int w, int h)
         }
     }
     
-    
-    //return dest;
-    
-    return testSeamCarving();
+    // /Users/tingyu/Downloads/harry.bmp
+    return dest;
+    //return genTextures(1,1,2,2);
 }

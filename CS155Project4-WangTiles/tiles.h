@@ -73,7 +73,9 @@ class Tiles
         vector<int> getVerticalSeam(int n, int e, int s, int w);
         vector<int> getHorizontalSeam(int n, int e, int s, int w);
     
-    
+        Pixel resamplePixel(Image* src, double x, double y);
+        Pixel takeWeightedAverage(Pixel pixel1, Pixel pixel2, double weight1, double weight2);
+        Image* getMiddleSquare (Image* src, double theta, int x, int y);
         Image* testSeamCarving();
 
 };
