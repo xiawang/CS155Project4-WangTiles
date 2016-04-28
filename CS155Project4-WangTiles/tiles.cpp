@@ -92,7 +92,7 @@ Tile::~Tile()
 {
 }
 
-void Tiles::genColors(){
+void Tiles::initColors(){
     
     vector<Pixel> colors;
     for (int i=0; i<(hc_ + vc_); i++) {
@@ -105,6 +105,59 @@ void Tiles::genColors(){
     }
     random_shuffle ( colors.begin(), colors.end() );
     colors_ = colors;
+}
+
+
+void Tiles::initTextures(Image* src){
+    
+    int patch_size = sqrt(tw_);
+    int width = src->getWidth();
+    int height = src->getHeight();
+    
+    for (int i = 0; i < hc_; i++){
+
+        Image* patch = new Image(patch_size,patch_size);
+        for (int m=0; m<patch_size; m++) {
+            for (int n=0; n<patch_size; n++) {
+                
+                // Wrap around edges
+                double x = m + rand() % (width - patch_size);
+                double y = n + rand() % (height - patch_size);
+                
+                double r = src->getPixel(x, y, 0);
+                double g = src->getPixel(x, y, 1);
+                double b = src->getPixel(x, y, 2);
+                patch->setPixel(m, n, 0, r);
+                patch->setPixel(m, n, 1, g);
+                patch->setPixel(m, n, 2, b);
+            }
+        }
+        himage_.push_back(patch);
+    }
+    
+    for (int j = 0; j < vc_; j++){
+        
+        Image* patch = new Image(patch_size,patch_size);
+        for (int m=0; m<patch_size; m++) {
+            for (int n=0; n<patch_size; n++) {
+                
+                // Wrap around edges
+                double x = m + rand() % (width - patch_size);
+                double y = n + rand() % (height - patch_size);
+                
+                double r = src->getPixel(x, y, 0);
+                double g = src->getPixel(x, y, 1);
+                double b = src->getPixel(x, y, 2);
+                patch->setPixel(m, n, 0, r);
+                patch->setPixel(m, n, 1, g);
+                patch->setPixel(m, n, 2, b);
+            }
+        }
+        vimage_.push_back(patch);
+        
+    }
+    
+    
 }
 
 
@@ -174,8 +227,8 @@ Tiles::Tiles(int hc, int vc, int tw, int th){
     tw_ = tw;
     th_ = th;
     
-    genColors();
-    genTiles();
+    initColors();
+    initTiles();
     
     for (int i = 0; i < tiles_.size(); i++){
         Tile* t = &tiles_[i];
@@ -187,7 +240,7 @@ Tiles::Tiles(int hc, int vc, int tw, int th){
 
 
 
-Tiles::Tiles(Image* scr, int hc, int vc, int tw, int th)
+Tiles::Tiles(Image* src, int hc, int vc, int tw, int th)
 {
     
     hc_ = hc;
@@ -199,7 +252,8 @@ Tiles::Tiles(Image* scr, int hc, int vc, int tw, int th)
     // put into himage_, vimage_
     
     // generate model, put into tiles_;
-    genTiles();
+    initTiles();
+    initTextures(src);
     
     // generate texture for each tile model
     for (int i = 0; i < tiles_.size(); i++){
@@ -217,7 +271,7 @@ Tiles::Tiles(Image* scr, int hc, int vc, int tw, int th)
  * models will contain all possible combinations of NW edges
  * colors for SE edges will be randomly selected
  */
-void Tiles::genTiles(){
+void Tiles::initTiles(){
     
     for (int i = 1; i <= hc_; i ++){
         for (int j = 1; j <= vc_; j++) {
@@ -289,9 +343,9 @@ Image* Tiles::tilePlain(int w, int h)
             int left = (j == 0) ? -1 : tiles_[tileModel[i][j-1]].getRight();
             
             tileModel[i][j] = getRandomTile(up, left);
-            cout << "i: " << i << endl;
-            cout << "j: " << j << endl;
-            cout << "model: " << tileModel[i][j] << endl;
+            //cout << "i: " << i << endl;
+            //cout << "j: " << j << endl;
+            //cout << "model: " << tileModel[i][j] << endl;
             
         }
     }
