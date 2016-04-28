@@ -63,6 +63,8 @@ class Tiles
         void initTextures(Image* src);     // sample patches from picture, store in himage_, vimage_
     
         int getRandomTile(int up, int left);  // randomly select a tile with matching NW edge
+        int colorDiff(double r, double g, double b);  // color difference
+        vector<int> seamCarving(Image* src1, Image* srr2);  // color difference
     
         Image* genDummyTexture(int n, int e, int s, int w);
         Image* genTextures(int n, int e, int s, int w);

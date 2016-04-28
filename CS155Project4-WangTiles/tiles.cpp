@@ -323,6 +323,18 @@ int Tiles::getRandomTile(int up, int left){
     
 }
 
+int Tiles::colorDiff(double r, double g, double b){
+    int res = 0;
+    res = sqrt(r*r + g*g + b*b);
+    return res;
+}
+
+vector<int> Tiles::seamCarving(Image* src1, Image* srr2){
+    vector<int> res;
+    
+    return res;
+}
+
 
 /*
  * given desired width w and desired height h,
