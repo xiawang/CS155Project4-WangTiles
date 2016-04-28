@@ -118,12 +118,15 @@ void Tiles::initTextures(Image* src){
     for (int i = 0; i < hc_; i++){
 
         Image* patch = new Image(patch_size,patch_size);
+        int off_x = rand() % (width - patch_size);
+        int off_y = rand() % (height - patch_size);
+        
         for (int m=0; m<patch_size; m++) {
             for (int n=0; n<patch_size; n++) {
                 
                 // Wrap around edges
-                double x = m + rand() % (width - patch_size);
-                double y = n + rand() % (height - patch_size);
+                double x = m + off_x;
+                double y = n + off_y;
                 
                 double r = src->getPixel(x, y, 0);
                 double g = src->getPixel(x, y, 1);
@@ -139,12 +142,15 @@ void Tiles::initTextures(Image* src){
     for (int j = 0; j < vc_; j++){
         
         Image* patch = new Image(patch_size,patch_size);
+        int off_x = rand() % (width - patch_size);
+        int off_y = rand() % (height - patch_size);
+        
         for (int m=0; m<patch_size; m++) {
             for (int n=0; n<patch_size; n++) {
                 
                 // Wrap around edges
-                double x = m + rand() % (width - patch_size);
-                double y = n + rand() % (height - patch_size);
+                double x = m + off_x;
+                double y = n + off_y;
                 
                 double r = src->getPixel(x, y, 0);
                 double g = src->getPixel(x, y, 1);
