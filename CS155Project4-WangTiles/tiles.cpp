@@ -386,7 +386,7 @@ Image* Tiles::getMiddleSquare (Image* src, double theta, int x, int y)
     
     int start = (sqrt(2)-1)*tw_/2;
     
-    int off = 16;
+    int off = tw_ / 6;
     
     Image* res = new Image(tw_ - off, tw_ - off);
     for (int i = 0; i < tw_ - off; i++){
