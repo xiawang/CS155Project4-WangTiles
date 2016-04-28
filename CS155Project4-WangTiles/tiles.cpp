@@ -477,8 +477,8 @@ int Tiles::getRandomTile(int up, int left){
     
 }
 
-int Tiles::colorDiff(double r, double g, double b){
-    int res = 0;
+double Tiles::colorDiff(double r, double g, double b){
+    double res = 0.0;
     res = sqrt(r*r + g*g + b*b);
     return res;
 }
@@ -502,20 +502,32 @@ vector<int> Tiles::seamCarving(Image* src1, Image* src2){
     }
     
     // create dp table
-    double **dp_table = new double*[height];
-    for (int x=0; x<height; x++){
-        dp_table[x] = new double[width];
+    vector<vector<double>> dp_table;
+    for (int i=0; i<height; i++) {
+        vector<double> temp_vec(width);
+        dp_table.push_back(temp_vec);
     }
-    double **bt_table = new double*[height];
-    for (int x=0; x<height; x++){
-        bt_table[x] = new double[width];
+    vector<vector<double>> bt_table;
+    for (int i=0; i<height; i++) {
+        vector<double> temp_vec(width);
+        bt_table.push_back(temp_vec);
     }
+//    double **dp_table = new double*[height];
+//    for (int x=0; x<height; x++){
+//        dp_table[x] = new double[width];
+//    }
+//    double **bt_table = new double*[height];
+//    for (int x=0; x<height; x++){
+//        bt_table[x] = new double[width];
+//    }
+    
     // initialize the frst row
     for (int i = 0; i < width; i++) {
         double r = temp->getPixel_(i,0,0);
         double g = temp->getPixel_(i,0,1);
         double b = temp->getPixel_(i,0,2);
-        dp_table[i][0] = colorDiff(r,g,b);
+        double temp_c = sqrt(r*r + g*g + b*b);
+        dp_table[0][i] = temp_c;
     }
     
     for(int i=1; i<height; i++){
@@ -533,7 +545,7 @@ vector<int> Tiles::seamCarving(Image* src1, Image* src2){
                 double g3 = temp->getPixel_(j+1,i-1,1);
                 double b3 = temp->getPixel_(j+1,i-1,2);
                 dp_table[i][j] = colorDiff(r,g,b) + min(colorDiff(r2,g2,b2),colorDiff(r3,g3,b3));
-                if (colorDiff(r2,g2,b2)<=colorDiff(r3,g3,b3)) {
+                if (colorDiff(r2,g2,b2)<colorDiff(r3,g3,b3)) {
                     bt_table[i][j] = j;
                 } else {
                     bt_table[i][j] = j+1;
@@ -549,14 +561,14 @@ vector<int> Tiles::seamCarving(Image* src1, Image* src2){
                 double g3 = temp->getPixel_(j+1,i-1,1);
                 double b3 = temp->getPixel_(j+1,i-1,2);
                 dp_table[i][j] = colorDiff(r,g,b) + min(min(colorDiff(r1,g1,b1),colorDiff(r2,g2,b2)),colorDiff(r3,g3,b3));
-                if (colorDiff(r1,g1,b1)<=colorDiff(r2,g2,b2)) {
-                    if (colorDiff(r1,g1,b1)<=colorDiff(r3,g3,b3)) {
+                if (colorDiff(r1,g1,b1)<colorDiff(r2,g2,b2)) {
+                    if (colorDiff(r1,g1,b1)<colorDiff(r3,g3,b3)) {
                         bt_table[i][j] = j-1;
                     } else {
                         bt_table[i][j] = j+1;
                     }
                 } else {
-                    if (colorDiff(r2,g2,b2)<=colorDiff(r3,g3,b3)) {
+                    if (colorDiff(r2,g2,b2)<colorDiff(r3,g3,b3)) {
                         bt_table[i][j] = j;
                     } else {
                         bt_table[i][j] = j+1;
@@ -570,7 +582,7 @@ vector<int> Tiles::seamCarving(Image* src1, Image* src2){
                 double g2 = temp->getPixel_(i-1,j,1);
                 double b2 = temp->getPixel_(i-1,j,2);
                 dp_table[i][j] = colorDiff(r,g,b) + min(colorDiff(r1,g1,b1),colorDiff(r2,g2,b2));
-                if (colorDiff(r1,g1,b1)<=colorDiff(r2,g2,b2)) {
+                if (colorDiff(r1,g1,b1)<colorDiff(r2,g2,b2)) {
                     bt_table[i][j] = j-1;
                 } else {
                     bt_table[i][j] = j;
