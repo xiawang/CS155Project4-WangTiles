@@ -167,7 +167,10 @@ void Tiles::initTextures(Image* src){
     
 }
 
-
+/*
+ * Return an array of indices indicating the lowest energy seam
+ * between the two overlapped subimage (NW vs. SE)
+ */
 vector<int> Tiles::getVerticalSeam(int n, int e, int s, int w){
     
     Image* north = himage_[n];
@@ -214,7 +217,10 @@ vector<int> Tiles::getVerticalSeam(int n, int e, int s, int w){
     
 }
 
-
+/*
+ * Return an array of indices indicating the lowest energy seam
+ * between the two overlapped subimage (NE vs. SW)
+ */
 vector<int> Tiles::getHorizontalSeam(int n, int e, int s, int w){
     
     Image* north = himage_[n];
@@ -262,6 +268,15 @@ vector<int> Tiles::getHorizontalSeam(int n, int e, int s, int w){
     
 }
 
+/*
+ * Given indices of samples, generate the 
+ * corresponding collage of the four samples
+ *
+ *   N | E
+ *   W | S
+ *
+ * Keeps the orientation of the samples (i.e. (0,0) at upper left)
+ */
 Image* Tiles::genCollage(int n, int e, int s, int w){
     
     Image* north = himage_[n];
@@ -335,7 +350,10 @@ Image* Tiles::genTextures(int n, int e, int s, int w){
     
 }
 
-
+/*
+ * Given a collage of four samples, rotate 45 degrees clockwise, 
+ * and get the square in the middle as the corresponding texture
+ */
 Image* Tiles::getMiddleSquare (Image* src, double theta, int x, int y)
 {
     float sin_val = sin(theta * M_PI / 180);
@@ -381,6 +399,11 @@ Image* Tiles::getMiddleSquare (Image* src, double theta, int x, int y)
 }
 
 
+/*
+ * Given the mapped coordinates before rotation, 
+ * sample a pixel from the orignal image,
+ * using bilinear sampling technique
+ */
 Pixel Tiles::resamplePixel(Image* src, double x, double y){
     int width = src->getWidth();
     int height = src->getHeight();
@@ -408,7 +431,9 @@ Pixel Tiles::resamplePixel(Image* src, double x, double y){
     return average;
 }
 
-
+/*
+ * Helper function for resamplePixel
+ */
 Pixel Tiles::takeWeightedAverage(Pixel pixel1, Pixel pixel2, double weight1, double weight2){
     double r1 = pixel1.getColor(0);
     double g1 = pixel1.getColor(1);
