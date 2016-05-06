@@ -627,14 +627,6 @@ vector<int> Tiles::seamCarving(Image* src1, Image* src2){
         vector<double> temp_vec(width);
         bt_table.push_back(temp_vec);
     }
-//    double **dp_table = new double*[height];
-//    for (int x=0; x<height; x++){
-//        dp_table[x] = new double[width];
-//    }
-//    double **bt_table = new double*[height];
-//    for (int x=0; x<height; x++){
-//        bt_table[x] = new double[width];
-//    }
     
     // initialize the frst row
     for (int i = 0; i < width; i++) {
@@ -721,13 +713,6 @@ vector<int> Tiles::seamCarving(Image* src1, Image* src2){
     
     reverse(res.begin(),res.end());
     
-    
-//    
-//    // TODELETE: dummy
-//    for (int i = 0; i < src1->getHeight(); i++){
-//        res.push_back(0);
-//    }
-    
     return res;
 }
 
@@ -761,8 +746,6 @@ Image* Tiles::testSeamCarving(){
  */
 Image* Tiles::tilePlain(int w, int h)
 {
-//    tw_ = tw_*sqrt(2);
-//    th_ = th_*sqrt(2);
     
     int rth = tiles_[0].getTexture()->getHeight();
     int rtw = tiles_[0].getTexture()->getWidth();
